@@ -11,7 +11,17 @@ public class AddButtonListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JFrame addFrame = new AddDriverFrame(mainFrame);
+		JButton source = (JButton) e.getSource();
+		JFrame addFrame = null;
+		
+		if (source.getText().equals("Add Driver")) {
+			addFrame = new AddDriverFrame(mainFrame);
+		} else if (source.getText().equals("Add Truck")) {
+			addFrame = new AddTruckFrame(mainFrame);
+		} else {
+			addFrame = new AddStoreFrame(mainFrame);
+		}
+
 		addFrame.setVisible(true);
 		mainFrame.setVisible(false);
 	}

@@ -19,6 +19,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+import java.awt.Insets;
+import javax.swing.JScrollPane;
 
 public class ReportFrame extends JFrame {
 
@@ -57,9 +60,9 @@ public class ReportFrame extends JFrame {
 			// GUI making the combo panel
 			GridBagLayout gbl_comboPanel = new GridBagLayout();
 			gbl_comboPanel.columnWidths = new int[] { 412, 0 };
-			gbl_comboPanel.rowHeights = new int[] { 52, 35, 0 };
+			gbl_comboPanel.rowHeights = new int[] { 0, 33, 35, 0, 0 };
 			gbl_comboPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-			gbl_comboPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+			gbl_comboPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 			comboPanel.setLayout(gbl_comboPanel);
 
 			
@@ -74,10 +77,18 @@ public class ReportFrame extends JFrame {
 			
 			
 			/* Make the combo box */
+			
+			JLabel lblChooseADate = new JLabel("Choose a date to see that weeks report");
+			GridBagConstraints gbc_lblChooseADate = new GridBagConstraints();
+			gbc_lblChooseADate.insets = new Insets(0, 0, 5, 0);
+			gbc_lblChooseADate.gridx = 0;
+			gbc_lblChooseADate.gridy = 0;
+			comboPanel.add(lblChooseADate, gbc_lblChooseADate);
 			JComboBox comboBox = new JComboBox(dates);
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
+			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 			gbc_comboBox.gridx = 0;
-			gbc_comboBox.gridy = 0;
+			gbc_comboBox.gridy = 1;
 			comboPanel.add(comboBox, gbc_comboBox);
 			comboBox.setSelectedIndex(-1); // start by displaying nothing in the combo box
 			
@@ -104,11 +115,6 @@ public class ReportFrame extends JFrame {
 						String fullNewDate = df.format(newDate);
 						
 						
-						
-//						ResultSet results = stmt.executeQuery("select * from storeshipment where datedelivered between " 
-//																+ "\"" +selectedDate + "\"" 
-//																+ " and \"" + fullNewDate + "\"");
-						
 						ResultSet results = stmt.executeQuery("select ss.datedelivered, s.name, d.truckid "
 								+ "from storeshipment ss join deliversto d on ss.deliveryid = d.deliveryid "
 								+ "join store s on s.storeid = d.storeid where ss.datedelivered between " 
@@ -126,7 +132,7 @@ public class ReportFrame extends JFrame {
 						GridBagConstraints gbc_table_header = new GridBagConstraints();
 						gbc_table_header.fill = GridBagConstraints.BOTH;
 						gbc_table_header.gridx = 0;
-						gbc_table_header.gridy = 1;
+						gbc_table_header.gridy = 2;
 						gbc_table_header.gridheight = 1;
 						gbc_table_header.weightx = 0.5;
 						
@@ -134,10 +140,10 @@ public class ReportFrame extends JFrame {
 						GridBagConstraints gbc_table = new GridBagConstraints();
 						gbc_table.fill = GridBagConstraints.BOTH;
 						gbc_table.gridx = 0;
-						gbc_table.gridy = 2;
+						gbc_table.gridy = 3;
 						comboPanel.add(table.getTableHeader(), gbc_table_header);
 						comboPanel.add(table, gbc_table);
-
+						
 						// Repaint the panel and table
 						comboPanel.revalidate();
 						comboPanel.repaint();

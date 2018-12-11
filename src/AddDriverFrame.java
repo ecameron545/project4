@@ -61,7 +61,7 @@ public class AddDriverFrame extends JFrame {
 
 					/* Query to update */
 					stmt.executeUpdate("insert into driver " + "(driverlicenseno, driverfname, driverlname, birthdate) "
-							+ "values (" + licenseNo + ", \"" + fName + "\", \"" + lName + "\", \"" + birthDate + "\")");
+							+ "values (" + Integer.parseInt(licenseNo) + ", \"" + fName + "\", \"" + lName + "\", \"" + birthDate + "\")");
 
 					con.close();
 				} catch (Exception e1) {

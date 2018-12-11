@@ -18,6 +18,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+import java.awt.Insets;
 
 public class TruckerInformationFrame extends JFrame {
 
@@ -28,7 +30,7 @@ public class TruckerInformationFrame extends JFrame {
 
 		/* Set up the frame */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 475, 153);
+		setBounds(100, 100, 475, 176);
 		this.setTitle("Trucker Information");
 		this.setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -56,27 +58,48 @@ public class TruckerInformationFrame extends JFrame {
 			// GUI making the combo panel
 			GridBagLayout gbl_comboPanel = new GridBagLayout();
 			gbl_comboPanel.columnWidths = new int[] { 412, 0 };
-			gbl_comboPanel.rowHeights = new int[] { 52, 35, 0 };
+			gbl_comboPanel.rowHeights = new int[] { 0, 52, 35, 0 };
 			gbl_comboPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-			gbl_comboPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+			gbl_comboPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 			comboPanel.setLayout(gbl_comboPanel);
 
 			
 			/* Get the driverids with which to fill the combo box from the DB and put them in the truckers array*/
-			ArrayList<String> result = new ArrayList<String>();
+			ArrayList<Integer> result = new ArrayList<Integer>();
 			ResultSet rs = stmt.executeQuery("select driverid from driver");
 			while (rs.next()) {
-				result.add(rs.getString("driverid"));
+				result.add(rs.getInt("driverid"));
 			}
-			String[] truckers = new String[result.size()];
+			Integer[] truckers = new Integer[result.size()];
+			
+			
+			result.sort(new Comparator<Integer>() {
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					if (o1 < o2)
+						return -1;
+					if(o1 >= o2)
+						return 1;
+					return 0;
+				}				
+			});
+			
 			result.toArray(truckers);
 			
 			
 			/* Make the combo box */
+			
+			JLabel lblChooseADriver = new JLabel("Choose a driver ");
+			GridBagConstraints gbc_lblChooseADriver = new GridBagConstraints();
+			gbc_lblChooseADriver.insets = new Insets(0, 0, 5, 0);
+			gbc_lblChooseADriver.gridx = 0;
+			gbc_lblChooseADriver.gridy = 0;
+			comboPanel.add(lblChooseADriver, gbc_lblChooseADriver);
 			JComboBox comboBox = new JComboBox(truckers);
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
+			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 			gbc_comboBox.gridx = 0;
-			gbc_comboBox.gridy = 0;
+			gbc_comboBox.gridy = 1;
 			comboPanel.add(comboBox, gbc_comboBox);
 			comboBox.setSelectedIndex(-1); // start by displaying nothing in the combo box
 			
@@ -104,7 +127,7 @@ public class TruckerInformationFrame extends JFrame {
 						GridBagConstraints gbc_table_header = new GridBagConstraints();
 						gbc_table_header.fill = GridBagConstraints.BOTH;
 						gbc_table_header.gridx = 0;
-						gbc_table_header.gridy = 1;
+						gbc_table_header.gridy = 2;
 						gbc_table_header.gridheight = 1;
 						gbc_table_header.weightx = 0.5;
 						
@@ -112,7 +135,7 @@ public class TruckerInformationFrame extends JFrame {
 						GridBagConstraints gbc_table = new GridBagConstraints();
 						gbc_table.fill = GridBagConstraints.BOTH;
 						gbc_table.gridx = 0;
-						gbc_table.gridy = 2;
+						gbc_table.gridy = 3;
 						comboPanel.add(table.getTableHeader(), gbc_table_header);
 						comboPanel.add(table, gbc_table);
 

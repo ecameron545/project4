@@ -8,7 +8,7 @@ class MainFrame{
 		/* Create the main frame */
 		JFrame frame = new JFrame("Trucks");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(450, 128);
+		frame.setSize(691, 102);
 		frame.setLocationRelativeTo(null);
 		
 		/* Panel to hold buttons */
@@ -23,12 +23,20 @@ class MainFrame{
 		reportButton.addActionListener(new ReportButtonListener(frame));
 		buttonPanel.add(reportButton);
 		
-		JButton addButton = new JButton("Add New");
-		addButton.addActionListener(new AddButtonListener(frame));
-		buttonPanel.add(addButton);
+		JButton addDriverButton = new JButton("Add Driver");
+		addDriverButton.addActionListener(new AddButtonListener(frame));
+		buttonPanel.add(addDriverButton);
 		
 		/* Add button panel to the main frame */
 		frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+		
+		JButton addTruckButton = new JButton("Add Truck");
+		addTruckButton.addActionListener(new AddButtonListener(frame));
+		buttonPanel.add(addTruckButton);
+		
+		JButton addStoreButton = new JButton("Add Store");
+		addStoreButton.addActionListener(new AddButtonListener(frame));
+		buttonPanel.add(addStoreButton);
 		
 		return frame;
 	}
