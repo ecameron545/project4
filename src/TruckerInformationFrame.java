@@ -30,7 +30,7 @@ public class TruckerInformationFrame extends JFrame {
 
 		/* Set up the frame */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 475, 176);
+		setBounds(100, 100, 527, 176);
 		this.setTitle("Trucker Information");
 		this.setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -114,7 +114,7 @@ public class TruckerInformationFrame extends JFrame {
 
 						/* Query DB for the driver and create a model from the Result Set */
 						JComboBox cb = (JComboBox) e.getSource();
-						ResultSet results = stmt.executeQuery("select * from driver where driverid = " + cb.getSelectedItem().toString());
+						ResultSet results = stmt.executeQuery("select *, YEAR(CURDATE()) - YEAR(birthdate) AS age from driver where driverid = " + cb.getSelectedItem().toString());
 						ListTableModel model = ListTableModel.createModelFromResultSet(results);
 				
 						/* Update the table's model, border, and header */
