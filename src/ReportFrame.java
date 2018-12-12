@@ -69,17 +69,7 @@ public class ReportFrame extends JFrame {
 			gbl_comboPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 			comboPanel.setLayout(gbl_comboPanel);
 
-			/*
-			 * Get the driverids with which to fill the combo box from the DB
-			 * and put them in the truckers array
-			 */
-			ArrayList<String> result = new ArrayList<String>();
-			ResultSet rs = stmt.executeQuery("select datedelivered from storeshipment");
-			while (rs.next()) {
-				result.add(rs.getString("datedelivered"));
-			}
-			String[] dates = new String[result.size()];
-			result.toArray(dates);
+			
 
 			/* Make the combo box */
 
@@ -89,7 +79,6 @@ public class ReportFrame extends JFrame {
 			gbc_lblChooseADate.gridx = 0;
 			gbc_lblChooseADate.gridy = 0;
 			comboPanel.add(lblChooseADate, gbc_lblChooseADate);
-			JComboBox comboBox = new JComboBox(dates);
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
 			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 			gbc_comboBox.gridx = 0;
